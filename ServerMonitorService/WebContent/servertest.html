@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<script type="text/javascript">
+function getPing() {
+	  var start;
+	  var client = getClient(); // xmlhttprequest object
+	  client.onreadystatechange = function() {
+	    if (client.readyState > 0) {
+	      pingDone(start); //handle ping
+	      client.onreadystatechange = null; //remove handler
+	    } 
+	  }
+	  start = new Date();
+	  client.open("HEAD", "/ping.txt"); //static file
+	  client.send();
+	}
+
+	function pingDone(start) {
+	  done = new Date();
+	  ms = done.valueOf() - start.valueOf();
+	  alert(ms + "ms ping time");
+	  document.getElementById('msg').innerHTML=ms + "ms ping time";
+	  //return ms;
+	  
+	}
+
+	function getClient() {
+	  if (window.XMLHttpRequest)
+	    return new XMLHttpRequest();
+
+	  if (window.ActiveXObject)
+	    return new ActiveXObject('MSXML2.XMLHTTP.3.0');
+
+	  throw("No XMLHttpRequest Object Available.");
+	}
+</script>
+<body>
+Hello!!!
+<div id="msg"></div>
+</body>
+</html>
